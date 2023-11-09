@@ -1,0 +1,26 @@
+{
+    "sqltools.connections": [
+        {
+            "pgOptions": {
+                "ssl": true
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "postgres://cse340kb:7Eh98MvQrf80QWwA22q75UYtZqHij1rc@dpg-cl6lmmi073pc73aj5drg-a.oregon-postgres.render.com/cse340kb_spy6",
+            "database": "cse340kb_spy6",
+            "username": "cse340kb"
+        },
+        {
+            "pgOptions": {
+                "ssl": true
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "render.com",
+            "connectString": "postgres://cse340kb:7Eh98MvQrf80QWwA22q75UYtZqHij1rc@dpg-cl6lmmi073pc73aj5drg-a.oregon-postgres.render.com/cse340kb_spy6"
+        }
+    ]
+}
