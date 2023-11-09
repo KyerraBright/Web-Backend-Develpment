@@ -9,6 +9,12 @@ INSERT INTO public.account (
     'tony@starkent.com',
     'Iam1ronM@n'
 );
+UPDATE public."account"
+SET "account_type" = 'Admin'
+WHERE "account_firstname" = 'Tony' AND "account_lastname" = 'Stark';
+DELETE FROM public."account"
+WHERE "account_firstname" = 'Tony' AND "account_lastname" = 'Stark';
+
 UPDATE public.inventory
 SET inv_description = REPLACE(inv_description, 'small interiors', 'large interiors')
 WHERE inv_id = 10;
