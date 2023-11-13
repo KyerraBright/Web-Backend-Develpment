@@ -9,24 +9,23 @@ const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
 const env = require("dotenv").config()
 const app = express()
-const static = require("./views/routes/static")
-const baseController = require("./views/Controllers/baseController")
-const invroute = require("./views/routes/inventoryRoute")
+const static = require("./routes/static")
+const baseController = require("./Controllers/baseController")
+const invroute = require("./routes/inventoryRoute")
 
 
 /* ***********************
  * View Engine and Templates
  *************************/
-app.set("view engine", "ejs")
 app.use(expressLayouts)
-app.set("layout", "./layouts/layout.ejs") // not at views root
+app.set("layout", "/layouts/layout.ejs") // not at views root
 
 /* ***********************
  * Routes
  *************************/
 app.use(static)
 app.get("/", function(req, res) {
-  res.render("./layouts/layout.ejs")
+  res.render("layouts/layout.ejs")
 })
 app.use(invroute)
 

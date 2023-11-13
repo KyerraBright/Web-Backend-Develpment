@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" lang="en">
-    <%- include('../partials/head') %>
+    <% console.log("Layout included"); %>
+    <%- include('../partials/head', { title: 'title' }) %>
 
     <body>
         <div id="wrapper">
@@ -8,7 +9,7 @@
             <%- include('../partials/navigation') %>
 
             <main>
-                <%- body %>
+                <%- include ('../partials/body')%>
             </main>
 
             <%- include('../partials/footer') %>

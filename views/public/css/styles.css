@@ -1,0 +1,61 @@
+/******* Change Box Model ***************/
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+*{
+  background-image: url(./public/images/site/checkerboard.jpg);
+}
+head{
+  text-align: horizontal;
+}
+nav{
+  display: inline;
+  background-color: black;
+  color: white;
+}
+body {
+  background-color: white !important;
+  border-style: solid !important;
+  border-width: 2px;
+  border-color: lightblue !important;
+  border-radius: 5px;
+  padding: 5px;
+}
+.bold{
+  font-weight: bold !important;
+}
+.blue-bold{
+  font-weight: bold;
+  background-color: rgb(255, 255, 255, 0.1);
+  color: aqua;
+  float: left;
+}
+.blue{
+  background-color: rgb(255, 255, 255, 0.1);
+  color: aqua;
+  float: left;
+}
+.today{
+  float: left;
+}
+.car{
+  float: right;
+}
+.upgrades{
+  float: left;
+  columns: 2;
+}
+.bold-upgrades{
+  float: left;
+}
+.bold-reviews{
+  float: right;
+}
+.bullets{
+  float: right;
+}
+ul{
+  list-style: circle;
+}
