@@ -16,6 +16,9 @@
     "express-ejs-layouts": "^2.5.1",
     "pg": "^8.8.0"
   },
+  "engines": {
+    "node": "19.4.0"
+  },
   "devDependencies": {
     "nodemon": "^2.0.15"
   }
