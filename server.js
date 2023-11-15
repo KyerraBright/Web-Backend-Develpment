@@ -7,7 +7,7 @@
  *************************/
 const express = require("express")
 const expressLayouts = require("express-ejs-layouts")
-const env = require("dotenv").config()
+require("dotenv").config()
 const app = express()
 const static = require("./views/routes/static")
 const baseController = require("./views/Controllers/baseController")
@@ -26,14 +26,37 @@ app.set("layout", "./layouts/layout.ejs") // not at views root
  * Routes
  *************************/
 app.use(static)
-app.get("/", function(req, res) {
-  res.render("./layouts/layout.ejs")
-})
-app.use(invroute)
+app.use(express.static("public"));
+
+// Set specific Content-Type headers for certain file types
+app.use("/public/images", (req, res, next) => {
+  const path = req.path.toLowerCase();
+  if (path.endsWith(".jpg")) {
+    res.setHeader("Content-Type", "image/jpeg");
+  } else if (path.endsWith(".png")) {
+    res.setHeader("Content-Type", "image/png");
+  } else if (path.endsWith(".ico")) {
+    res.setHeader("Content-Type", "image/x-icon");
+  }
+  // Add more conditions for other file types as needed
+
+  next();
+});
+
+// Set Content-Type header for CSS file
+app.use("/public/css", (req, res, next) => {
+  if (req.path.endsWith(".css")) {
+    res.setHeader("Content-Type", "text/css");
+  }
+  next();
+});
+app.use("/inv", invroute)
+app.get("/", baseController.buildHome)
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
+app.get("/", utilities.handleErrors(baseController.buildHome))
 
 
 /* ***********************
