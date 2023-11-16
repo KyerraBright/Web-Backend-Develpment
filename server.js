@@ -15,13 +15,13 @@ const invroute = require("./views/routes/inventoryRoute")
 const utilities = require("./views/utilities/")
 
 
+
 /* ***********************
  * View Engine and Templates
  *************************/
 app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout.ejs") // not at views root
-
 /* ***********************
  * Routes
  *************************/
@@ -41,15 +41,30 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 * Place after all other middleware
 *************************/
 app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav()
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404){ message = err.message} else {message = 'Oh no! There was a crash. Maybe try a different route?'}
+  let nav = await utilities.getNav();
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+
+  let message;
+  switch (err.status) {
+    case 404:
+      message = err.message || 'Sorry, the page was not found.';
+      break;
+    case 500:
+      message = 'Oops! Internal server error occurred.';
+      break;
+    // Add more cases for other status codes if needed
+
+    default:
+      message = 'Oh no! There was a crash. Maybe try a different route?';
+      break;
+  }
+
   res.render("errors/error", {
     title: err.status || 'Server Error',
     message,
     nav
-  })
-})
+  });
+});
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
