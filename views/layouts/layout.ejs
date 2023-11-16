@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" lang="en">
+<html lang="en">
     <% console.log("Layout included"); %>
     <%- include('../partials/head', { title: 'title' }) %>
 
     <body>
         <div id="wrapper">
-            <%- include('../partials/header') %>
-            <%- include('../partials/navigation') %>
+            <% include('../partials/header') %>
+            <% include('../partials/navigation') %>
 
             <main>
-                <%- include ('../partials/body')%>
+                <%- body %>
             </main>
 
-            <%- include('../partials/footer') %>
+            <% include('../partials/footer') %>
         </div>
     </body>
 </html>

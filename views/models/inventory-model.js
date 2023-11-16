@@ -23,24 +23,17 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
-module.exports = { getInventoryByClassificationId, getClassifications };
+const InventoryModel = {
+  getCarsByType: async function (carType) {
+    try {
+      const query = 'SELECT * FROM public.inventory WHERE classification_id = ?'; // Example SQL query
+      const cars = await db.query(query, [classification_id]);
+      return cars;
+    } catch (error) {
+      console.error('Error fetching cars by type:', error);
+      throw error;
+    }
+  },
+};
 
-/* ***************************
- *  Get all inventory items and classification_name by classification_id
- * ************************** */
-async function getInventoryByClassificationId(classification_id) {
-  try {
-    const data = await pool.query(
-      `SELECT * FROM public.inventory AS i 
-      JOIN public.classification AS c 
-      ON i.classification_id = c.classification_id 
-      WHERE i.classification_id = $1`,
-      [classification_id]
-    )
-    return data.rows
-  } catch (error) {
-    console.error("getclassificationsbyid error " + error)
-  }
-}
-
-module.exports = {getClassifications, getInventoryByClassificationId};
+module.exports = { getInventoryByClassificationId, getClassifications, InventoryModel };
