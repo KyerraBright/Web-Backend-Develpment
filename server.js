@@ -40,7 +40,7 @@ app.get("/", utilities.handleErrors(baseController.buildHome))
 * Express Error Handler
 * Place after all other middleware
 *************************/
-app.use(async (err, req, res, next) => {
+/*app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav();
   console.error(`Error at: "${req.originalUrl}": ${err.message}`);
 

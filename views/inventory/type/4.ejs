@@ -1,0 +1,27 @@
+<!-- ./inventory/classification.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Include necessary head content -->
+</head>
+<body>
+  <div id="wrapper">
+    <!-- Include header and navigation if needed -->
+
+    <main>
+      <h1>List of Cars</h1>
+      <ul>
+        <% cars.forEach((car) => { %>
+          <li>
+            <h2><%= car.make %> <%= car.model %></h2>
+            <!-- Display other car information here -->
+          </li>
+        <% }); %>
+      </ul>
+    </main>
+
+    <!-- Include footer if needed -->
+  </div>
+</body>
+</html>

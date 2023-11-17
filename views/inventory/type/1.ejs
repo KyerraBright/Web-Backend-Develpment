@@ -1,18 +1,27 @@
+<!-- ./inventory/classification.ejs -->
+
 <!DOCTYPE html>
-<html lang="en" lang="en">
-    <% console.log("type 1"); %>
-    <%- include('../partials/head', { title: 'title' }) %>
+<html lang="en">
+<head>
+  <!-- Include necessary head content -->
+</head>
+<body>
+  <div id="wrapper">
+    <!-- Include header and navigation if needed -->
 
-    <body>
-        <div id="wrapper">
-            <%- include('../partials/header') %>
-            <%- include('../partials/navigation') %>
+    <main>
+      <h1>List of Cars</h1>
+      <ul>
+        <% cars.forEach((car) => { %>
+          <li>
+            <h2><%= car.make %> <%= car.model %></h2>
+            <!-- Display other car information here -->
+          </li>
+        <% }); %>
+      </ul>
+    </main>
 
-            <main>
-                <h1>This is the Custom Cars page</h1>
-            </main>
-
-            <%- include('../partials/footer') %>
-        </div>
-    </body>
+    <!-- Include footer if needed -->
+  </div>
+</body>
 </html>
