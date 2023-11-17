@@ -3,11 +3,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Include necessary head content -->
+  <%- include('../partials/head', { title: 'title' }) %>
 </head>
 <body>
   <div id="wrapper">
-    <!-- Include header and navigation if needed -->
+    <%- include('../partials/header') %>
+    <%- include('../partials/navigation') %>
 
     <main>
       <h1>List of Cars</h1>
@@ -21,7 +22,7 @@
       </ul>
     </main>
 
-    <!-- Include footer if needed -->
+    <%- include('../partials/footer') %>
   </div>
 </body>
 </html>
