@@ -22,10 +22,10 @@ README.md
 .vscode
 
 views.inventory.addclass.ejs
-../views/inventory/addclass.ejs
+/views/inventory/addclass.ejs
 inventory.broken.ejs
 inventory.deleteconfirm.ejs
 inventory.editvehicle.ejs
 inventory.management.ejs
 inbox
-account.editaccount.ejs
+account.editaccount.ej
