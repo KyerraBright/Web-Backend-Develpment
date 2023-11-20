@@ -1,4 +1,4 @@
-const pool = require("../database/")
+const pool = require("../views/database/index")
 
 /* *****************************
 *   Get all accounts (SELECT)

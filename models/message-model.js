@@ -1,4 +1,4 @@
-const pool = require("../database/")
+const pool = require("../views/database/index")
 
 /* ***************************
 *  Get all message by account_id (SELECT)
