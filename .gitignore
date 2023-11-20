@@ -21,7 +21,7 @@ README.md
 # vscode files for debugging
 .vscode
 
-inventory.addclass.ejs
+views.inventory.addclass.ejs
 inventory.broken.ejs
 inventory.deleteconfirm.ejs
 inventory.editvehicle.ejs
