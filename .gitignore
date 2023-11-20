@@ -12,9 +12,6 @@ node_modules
 # will be manually created by you or dynamically # created on the hosting server
 .env
 
-# .DS_Store is only for Mac users
-**/.DS_Store
-
 # pnpm-lock should NOT be uploaded to the repo
 pnpm-lock.yaml
 
@@ -23,3 +20,11 @@ README.md
 
 # vscode files for debugging
 .vscode
+
+inventory.addclass.ejs
+inventory.broken.ejs
+inventory.deleteconfirm.ejs
+inventory.editvehicle.ejs
+inventory.management.ejs
+inbox
+account.editaccount.ejs
