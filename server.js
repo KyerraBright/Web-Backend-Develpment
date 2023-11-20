@@ -12,7 +12,7 @@ const app = express()
 const baseController = require("./controllers/baseController")
 const utilities = require("./utilities/")
 const session = require("express-session")
-const pool = require('./database/index')
+const pool = require('./views/database/index')
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 
