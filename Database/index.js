@@ -14,7 +14,6 @@ if (process.env.NODE_ENV == "development") {
       rejectUnauthorized: false,
     },
 })
-console.log(connectionString, pool)
 
 // Added for troubleshooting queries
 // during development
@@ -30,7 +29,6 @@ module.exports = {
     }
   },
 }
-console.log('module.exports');
 } else {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
