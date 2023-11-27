@@ -29,7 +29,7 @@ router.post(
   regValidate.checkLoginData,
   handleErrors(accountController.accountLogin)
 )
-
+router.get('/account', accountController.buildAccount);
 // Route to build account login view
 router.get("/edit/:account_id", handleErrors(accountController.buildEditAccount));
 

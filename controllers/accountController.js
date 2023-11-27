@@ -3,8 +3,8 @@ const messageModel = require("../models/message-model")
 const utilities = require("../utilities/")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const secret = process.env.ACCESS_TOKEN_SECRET;
 require("dotenv").config()
-
 /* ****************************************
 *  Deliver registration view (get /register)
 * *************************************** */
@@ -85,9 +85,10 @@ async function accountLogin(req, res) {
   // gABE returns row count == 0 || == 1 
   // ? 0 -> return error ? 1 return * accountData
   const accountData = await accountModel.getAccountByEmail(account_email)
+  console.log(accountData)
 
   if (!accountData) {
-    req.flash("notice", "Please check your credentials and try again.")
+    req.flash("notice", "Please check your credentials and try again in accountData.")
     res.status(400).render("account/login", {
       title: "Login",
       nav,
@@ -99,25 +100,25 @@ async function accountLogin(req, res) {
   }
   try {
     let match = await bcrypt.compare(account_password, accountData.account_password);
+    console.log("matching", match);
     if (match) {
       // delete password from accountData array
       // create jwt with payload containing remaining data
       delete accountData.account_password
 
       // use .env secret key to sign, expires in one hour
-      const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+      const accessToken = jwt.sign(accountData, secret, { expiresIn: 3600 * 1000 })
 
       // can only be passed through http requests, maximum age is 1 hour
       res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
-      return res.redirect("/account/")
+      return  res.redirect("/account/account");
     } else {
       throw new Error('Access forbidden')
     }
   } catch (error) {
-    // return new Error('Access Forbidden')
-    req.flash("notice", "Please check your credentials and try again.")
-    res.redirect("/account/login")
-    return error
+    console.error("Error during password comparison:", error);
+    req.flash("notice", "An error occurred during login. Please try again.");
+    res.redirect("/account/login");
   }
 }
 
