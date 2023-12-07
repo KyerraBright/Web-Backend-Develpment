@@ -1,7 +1,6 @@
 // const { selectFields } = require("express-validator/src/field-selection")
 const invModel = require("../models/inventory-model")
 const accountModel = require("../models/account-model")
-const messageModel = require("../models/message-model")
 const Util = {}
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
