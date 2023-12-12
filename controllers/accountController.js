@@ -127,12 +127,12 @@ async function accountLogin(req, res) {
 * *************************************** */
 async function buildAccount(req, res, next) {
   let nav = await utilities.getNav()
-  let unreadMessages = await messageModel.getUnreadMessageCountByAccountId(res.locals.accountData.account_id)
+  //let unreadMessages = await messageModel.getUnreadMessageCountByAccountId(res.locals.accountData.account_id)
   res.render("account/account", {
     title: "Account",
     nav,
     errors: null,
-    unreadMessages,
+    //unreadMessages,
   })
 }
 
