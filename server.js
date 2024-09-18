@@ -1,98 +1,30 @@
-/* ******************************************
- * This server.js file is the primary file of the 
- * application. It is used to control the project.
- *******************************************/
-/* ***********************
- * Require Statements
- *************************/
-const express = require("express")
-const expressLayouts = require("express-ejs-layouts")
+const express = require('express');
+const app = express();
 const env = require("dotenv").config()
-const app = express()
-const baseController = require("./controllers/baseController")
-const utilities = require("./utilities/")
-const session = require("express-session")
-const pool = require('./views/database/index')
-const bodyParser = require("body-parser")
-const cookieParser = require("cookie-parser")
+const mysql = require('mysql');
 
-/* ***********************
- * Middleware
- * ************************/
-app.use(session({
-  store: new (require('connect-pg-simple')(session))({
-    createTableIfMissing: true,
-    pool,
-  }),
-  secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
-  name: 'sessionId',
-}))
+const connection = mysql.createConnection({
+  host: 'localhost', // Replace with your database host
+  user: 'KyerraBright', // Replace with your database username
+  password: 'March12001', // Replace with your database password
+  database: 'Malea' // Replace with your database name
+});
 
-// Express Messages Middleware
-app.use(require('connect-flash')())
-app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
-  next()
-})
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting: ' + err.stack);
+    return;
+  }
+  console.log('Connected as id ' + connection.threadId);
+});
 
-// Use body parser
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+// Example query
+connection.query('SELECT * FROM yourtable', (error, results, fields) => {
+  if (error) throw error;
+  console.log(results);
+});
 
-// Use cookie parser
-app.use(cookieParser())
-
-// Use token validation
-app.use(utilities.checkJWTToken)
-
-/* ***********************
- * View Engine and Template
- *************************/
-app.set("view engine", "ejs")
-app.use(expressLayouts)
-app.set("layout", "./layouts/layout")
-
-/* ***********************
- * Routes
- *************************/
-// static route
-app.use(require("./routes/static"))
-
-// index route
-app.get("/", utilities.handleErrors(baseController.buildHome))
-
-// inventory route
-app.use("/inv", require("./routes/inventoryRoute"))
-
-// account route
-app.use("/account", require("./routes/accountRoute"))
-
-
-// File Not Found Route - must be last route in list
-app.use(async (req, res, next) => {
-  next({
-    status: 404, 
-    message: 'This is not the page you are looking for... Go about your business... Move along...'
-  })
-})
-
-/* ***********************
-* Express Error Handler
-* Place after all other middleware
-*************************/
-app.use(async (err, req, res, next) => {
-  let nav = await utilities.getNav()
-  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
-  if(err.status == 404) {message = err.message} else {message = 'Oops, looks like something went wrong! Maybe try a different route?'}
-  res.render("errors/error", {
-    title: err.status || 'Server Error',
-    message,
-    nav,
-  })
-})
-
+connection.end();
 
 /* ***********************
  * Local Server Information
@@ -106,20 +38,4 @@ const host = process.env.HOST
  *************************/
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
-})
-
-/*account_firstname: Basic
-account_lastname: Client
-account_email: basic@340.edu
-account_password: I@mABas1cCl!3nt
-
-account_firstname: Happy
-account_lastname: Employee
-account_email: happy@340.edu
-account_password: I@mAnEmpl0y33
-
-account_firstname: Manager
-account_lastname: User
-account_email: manager@340.edu
-account_password: I@mAnAdm!n1strat0r
-*/
+});
