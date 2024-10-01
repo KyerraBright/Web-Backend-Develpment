@@ -60,7 +60,6 @@ router.get('/data', (req, res) => {
       };
     });
 
-    console.log("Modified Results: ", modifiedResults);
     res.json(modifiedResults); // Send the results as JSON
   });
 });

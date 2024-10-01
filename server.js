@@ -2,11 +2,16 @@ const express = require('express');
 const app = express();
 const env = require("dotenv").config();
 const products = require('./js/products');
+const path = require('path');
 const routes = require('./routes/routes');
-
+const login = require('./js/login');
 
 app.use('/', products);
-app.use("/",routes);
+
+app.get('/html/login.html', (reg, res) => {
+  res.sendFile(path.join(__dirname, 'html/login.html'));}
+  );
+app.use("/", login );
 
 
 
@@ -15,7 +20,7 @@ app.use("/",routes);
  * Local Server Information
  * Values from .env (environment) file
  *************************/
-const port = process.env.PORT || 3000; // Fallback to port 3000 if PORT is not defined
+const port = process.env.PORT || 5500; // Fallback to port 3000 if PORT is not defined
 const host = process.env.HOST || 'localhost'; // Fallback to localhost if HOST is not defined
 
 
