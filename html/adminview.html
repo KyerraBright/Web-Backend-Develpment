@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designs Table</title>
+    <style>
+    /* Add padding to table cells */
+    #designs-table {
+        border-collapse: collapse; /* Optional: collapses borders between cells */
+        width: 100%; /* Optional: makes the table full width */
+    }
+    #designs-table th, 
+    #designs-table td {
+        padding: 10px; /* Adjust the value as needed */
+        border: 1px solid #65684C; /* Optional: adds a border for better visibility */
+    }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <li><a href="/html/login.html">Login</a></li>
+        <li><a href="/html/about.html">about</a></li>
+    </nav>
+    <form>
+        <label for="design">Design</label>
+        <input type="text" id="design" name="design" required>
+        <br>
+        <label for="color">Color</label>
+        <input type="text" id="color" name="color" required>
+        <br>
+        <label for="size">Size</label>
+        <input type="text" id="size" name="size" required>
+        <br>
+        <label for="price">Price</label>
+        <input type="text" id="price" name="price" required>
+        <br>
+        <input type="submit" id="submit" name="submit">
+    </form>
+
+</body>
+</html>

@@ -17,9 +17,11 @@ router.post('/login', (req, res) => {
     const user = users.find(user => user.username === username && user.password === password);
 
     if (user) {
-        res.json({ success: true, role: user.role });
+        // Instead of redirecting here, send a success response
+        return res.json({ success: true, role: user.role });
     } else {
-        res.json({ success: false });
+        // Send an error message instead of redirecting
+        return res.json({ success: false, message: 'Invalid username or password' });
     }
 });
 
