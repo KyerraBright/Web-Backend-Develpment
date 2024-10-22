@@ -6,61 +6,68 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const login = require('./js/login');
 const adminview = require('./js/adminview');
+const deleterown = require('./js/deleterow.js');
 
-app.use('/', products);
-
-app.get('/html/login.html', (reg, res) => {
-  res.sendFile(path.join(__dirname, 'html/login.html'));}
-  );
-app.use("/", login );
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.post('/adminview', (req, res) => {
-    const { username, password } = req.body;
-    // Add your authentication logic here
-    if (username === 'admin' && password === 'password') {
-        res.json({ success: true, role: 'admin' });
-    } else if (username === 'user' && password === 'password') {
-        res.json({ success: true, role: 'user' });
-    } else {
-        res.status(401).json({ success: false, message: 'Invalid credentials' });
-    }
-});
-app.get('/html/adminview.html', (reg, res) => {
-  res.sendFile(path.join(__dirname, 'html/adminview.html'));}
-  )
-
+app.use('/', products);
+app.use("/", login);
 app.use("/", adminview);
-app.post('/adminview', (req, res) => {
-  const { design, color, size, price } = req.body;
-  const sql = 'INSERT INTO users (design, color, size, price) VALUES (?, ?)';
-  db.query(sql, [design, color, size, price], (err, result) => {
-      if (err) {
-          res.status(500).json({ message: 'Database error' });
-          throw err;
+
+app.use(express.static(path.join(__dirname, 'html')));
+
+// Serve signup HTML
+app.get('/html/about.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html/about.html'));
+})
+app.get('/html/signup.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html/signup.html'));
+})
+// Serve inventory HTML
+app.get('/html/inventory.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html/inventory.html'));
+});
+// Serve login HTML
+app.get('/html/login.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'html/login.html'));
+});
+
+// Serve admin view HTML
+app.get('/html/adminview.html', (req, res) => {
+  console.log('adminview was called');
+  res.sendFile(path.join(__dirname, 'html/adminview.html'));
+});
+
+// DELETE route
+app.delete('/delete', (req, res) => {
+  const { design } = req.body;
+  
+  if (!design) {
+      return res.status(400).json({ message: 'Design name is required' });
+  }
+
+  const query = 'DELETE FROM yourtable WHERE Design = ?';
+  
+  connection.query(query, [design], (error, results) => {
+      if (error) {
+          console.error('Error in delete query:', error);
+          return res.status(500).json({ message: 'Server error' });
       }
-      res.status(200).json({ message: 'New record created successfully' });
+
+      if (results.affectedRows === 0) {
+          return res.status(404).json({ message: 'Design not found' });
+      }
+
+      res.status(200).json({ message: 'Design deleted successfully' });
   });
 });
 
 
 
+// Local Server Information
+const port = process.env.PORT || 5500;
+const host = process.env.HOST || 'localhost';
 
-/* ***********************
- * Local Server Information
- * Values from .env (environment) file
- *************************/
-const port = process.env.PORT || 5500; // Fallback to port 3000 if PORT is not defined
-const host = process.env.HOST || 'localhost'; // Fallback to localhost if HOST is not defined
-
-
-
-/* ***********************
- * Log statement to confirm server operation
- *************************/
+// Log statement to confirm server operation
 app.listen(port, () => {
   console.log(`App listening on ${host}:${port}`);
 });
-
-
-
