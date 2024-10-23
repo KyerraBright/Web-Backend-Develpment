@@ -48,47 +48,55 @@
             <input type="password" id="password" name="password" required>
             <br>
             <button type="submit">Login</button>
+            <button type="button" id="signupButton">Sign Up</button>
             <div id="error-message" aria-live="assertive"></div>
         </form>
     </div>
     
     <script>
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-            // Basic client-side validation
-            if (!username || !password) {
-                document.getElementById('error-message').innerText = 'Please fill in all fields.';
-                return;
+    // Basic client-side validation
+    if (!username || !password) {
+        document.getElementById('error-message').innerText = 'Please fill in all fields.';
+        return;
+    }
+
+    try {
+        const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log(result); // Log result for debugging
+            if (result.role === 'admin') {
+                window.location.href = '/html/adminview.html'; // Redirect for admin
+            } else if (result.role === 'customer') {
+                window.location.href = '/html/inventory.html'; // Redirect for customer
+            } else {
+                document.getElementById('error-message').innerText = 'Invalid role.';
             }
+        } else {
+            const error = await response.json();
+            document.getElementById('error-message').innerText = error.message || 'Login failed.';
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        document.getElementById('error-message').innerText = 'An unexpected error occurred.';
+    }
+});
 
-            try {
-                const response = await fetch('/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ username, password })
-                });
-
-                if (response.ok) {
-                    const result = await response.json();
-                    if (result.role === 'admin') {
-                        window.location.href = '/html/adminview.html'; // Redirect for admin
-                    } else {
-                        window.location.href = '/html/inventory.html'; // Redirect for customer
-                    }
-                } else {
-                    const error = await response.json();
-                    document.getElementById('error-message').innerText = error.message || 'Login failed.';
-                }
-            } catch (error) {
-                console.error('Error during login:', error);
-                document.getElementById('error-message').innerText = 'An unexpected error occurred.';
-            }
+        document.getElementById('signupButton').addEventListener('click', function() {
+            window.location.href = '/html/signup.html';
         });
 
     </script>

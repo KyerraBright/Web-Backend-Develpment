@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt'); // For password hashing
+const bcrypt = require('bcrypt');
 
 console.log('Starting the login process');
 
@@ -13,9 +12,9 @@ router.use(bodyParser.json());
 // MySQL connection configuration
 const db = mysql.createConnection({
     host: 'localhost',
-  user: 'KyerraBright',
-  password: 'March12001',
-  database: 'Malea'
+    user: 'KyerraBright',
+    password: 'March12001',
+    database: 'Malea'
 });
 
 // Connect to the database
@@ -25,11 +24,10 @@ db.connect((err) => {
         return;
     }
     console.log('Connected to the database!!!');
-
 });
 
 // Handle login POST request
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
     // Validate input
@@ -39,8 +37,7 @@ router.post('/login', (req, res) => {
 
     // Query the database for the user
     const query = 'SELECT * FROM login WHERE username = ?';
-    db.query(query, [username], (error, results) => {
-        console.log("in the db query", results);
+    db.query(query, [username], async (error, results) => {
         if (error) {
             console.error('Database query error:', error);
             return res.status(500).json({ success: false, message: 'Internal server error.' });
@@ -53,15 +50,15 @@ router.post('/login', (req, res) => {
         const user = results[0];
         console.log(user);
 
-        // Directly compare passwords (not recommended for production)
-        if (user.password === password) {
+        // Compare hashed password
+        const match = await bcrypt.compare(password, user.password);
+        if (match) {
             // Login successful, send user role
             return res.json({ success: true, role: user.role });
         } else {
             return res.status(401).json({ success: false, message: 'Invalid username or password.' });
         }
     });
-
-    });
+});
 
 module.exports = router;
